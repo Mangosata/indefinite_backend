@@ -16,8 +16,8 @@
 <body>
 <div class="signin-form">
     <form action="/examples/actions/confirmation.php" method="post">
-        <h2>Sign in</h2>
-        <p class="hint-text">Sign in with your social media account</p>
+        <h2 th:text="#{login.tip}">Sign in</h2>
+        <p class="hint-text" th:text="#{login.media}">Sign in with your social media account</p>
         <div class="social-btn text-center">
             <a href="#" class="btn btn-primary btn-lg" title="Facebook"><i class="fa fa-facebook"></i></a>
             <a href="#" class="btn btn-info btn-lg" title="Twitter"><i class="fa fa-twitter"></i></a>
@@ -25,28 +25,34 @@
         </div>
         <div class="or-seperator"><b>or</b></div>
         <div class="form-group">
-            <input type="text" class="form-control input-lg" name="username" placeholder="Username" required="required">
+            <input type="text" class="form-control input-lg" name="username" th:placeholder="#{login.username}"
+                   placeholder="Username" required="required">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control input-lg" name="password" placeholder="Password"
+            <input type="password" class="form-control input-lg" name="password" th:placeholder="#{login.password}"
+                   placeholder="Password"
                    required="required">
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg btn-block signup-btn">Sign in</button>
         </div>
         <div class="text-center checkbox mb-3">
             <label>
-                <input type="checkbox" value="remember-me"> Remember me
+                <input type="checkbox" value="remember-me"> [[#{login.remember}]]
             </label>
         </div>
-        <div class="text-center small"><a href="#">Forgot Your password?</a></div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block signup-btn" th:text="#{login.btn}">Sign in
+            </button>
+        </div>
+        <div class="text-center small"><a href="#" th:text="#{login.forgot}">Forgot Your password?</a></div>
         <div class="text-center small">
-            <a class="btn btn-sm">中文</a>
-            <a class="btn btn-sm">English</a>
+            <a class="btn btn-sm" th:href="@{/index.html(l='zh_CN')}">中文</a>
+            <a class="btn btn-sm" th:href="@{/index.html(l='en_US')}">English</a>
         </div>
 
     </form>
-    <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
+    <div class="text-center small">
+        [[#{login.noAccount}]]
+        <a href="#" th:text="#{login.signup}">Sign up</a>
+    </div>
 
 </div>
 </body>
