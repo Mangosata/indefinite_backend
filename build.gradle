@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.2.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'idea'
 }
 
 group = 'com.overwall'
@@ -21,6 +22,14 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
+	compile 'org.webjars:bootstrap:4.4.1-1'
+	compile 'org.webjars:jquery:3.4.1'
+	// https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.thymeleaf:thymeleaf:3.0.9.RELEASE')
+	compile('org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE')
+	compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.2.2')
+
 }
 
 test {
