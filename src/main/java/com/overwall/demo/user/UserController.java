@@ -1,17 +1,22 @@
-package com.overwall.demo.user.web;
+package com.overwall.demo.user;
 
 import com.overwall.demo.core.CoreResponseBody;
 import com.overwall.demo.user.User;
 import com.overwall.demo.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/")
 public class UserController {
+
     @Autowired
     UserService userService;
 
@@ -21,22 +26,58 @@ public class UserController {
         return ResponseEntity.ok("hello world");
     }
 
+    //login
+//    @PostMapping("/login")
+//    public String login(@RequestParam String username,
+//                        @RequestParam String password,
+//                        Map<String, Object> map,
+//                        HttpSession session) {
+//        if (!StringUtils.isEmpty(username) && "123456".equals(password)) {
+//            //防止表单重复提交，重定向到主页
+//            session.setAttribute("loginUser", username);
+//            return "redirect:/main.html";
+//        } else {
+//            map.put("msg", "用户名密码错误");
+//            return "mylogin";
+//        }
+//    }
+
+    @PostMapping("/test")
+    public ResponseEntity<CoreResponseBody> test(@RequestBody User user) {
+        CoreResponseBody res = null;
+        res = new CoreResponseBody(null, "Username or password is wrong", null);
+        return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<CoreResponseBody> login(@RequestBody User user) {
+        CoreResponseBody res = userService.isUserOrPassword(user);
+        // 密码和用户名不能为空
+        if (res != null) {
+            return ResponseEntity.ok(res);
+        }
+
+        String loginToken = userService.login(user);
+        if (loginToken == null) {
+            res = new CoreResponseBody(null, "Username or password is wrong", null);
+        } else {
+            // 给前端返回token
+            res = new CoreResponseBody(loginToken, "Get Token", null);
+        }
+        return ResponseEntity.ok(res);
+    }
+
+
     //register
-    @PostMapping("/users")
+    @PostMapping("/register")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<CoreResponseBody> register(@RequestBody User user) {
-        CoreResponseBody res = null;
-
-        if (user.getUsername() == null || user.getPassword() == null) {
-            res = new CoreResponseBody(null, "", new Exception("Parameter is null"));
+        // 输出格式
+        CoreResponseBody res = userService.isUserOrPassword(user);
+        // 密码和用户名不能为空
+        if (res != null) {
             return ResponseEntity.ok(res);
         }
-
-        if (user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
-            res = new CoreResponseBody(null, "", new Exception("Username or Password is empty"));
-            return ResponseEntity.ok(res);
-        }
-
 
         User savedUser = userService.register(user);
         if (savedUser == null) {

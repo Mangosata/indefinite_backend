@@ -15,7 +15,7 @@
 
 <body>
 <div class="signin-form">
-    <form action="/examples/actions/confirmation.php" method="post">
+    <form action="" th:action="@{/users/login}" method="post">
         <h2 th:text="#{login.tip}">Sign in</h2>
         <p class="hint-text" th:text="#{login.media}">Sign in with your social media account</p>
         <div class="social-btn text-center">
@@ -42,6 +42,7 @@
             <button type="submit" class="btn btn-success btn-lg btn-block signup-btn" th:text="#{login.btn}">Sign in
             </button>
         </div>
+        <p class="text-center" style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
         <div class="text-center small"><a href="#" th:text="#{login.forgot}">Forgot Your password?</a></div>
         <div class="text-center small">
             <a class="btn btn-sm" th:href="@{/index.html(l='zh_CN')}">中文</a>
