@@ -48,4 +48,16 @@ public class Token {
             return null;
         }
     }
+
+    // todo： token refresh
+    public void refreshToken() {
+
+    }
+
+    /**
+     * todo: over 80%, auto refresh token and do verify
+     */
+    public void autoRequire() {
+
+    }
 }
