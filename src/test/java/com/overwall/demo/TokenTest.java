@@ -6,13 +6,16 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.overwall.demo.user.User;
 import org.junit.jupiter.api.Test;
+import com.overwall.demo.user.token.Token;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
 public class TokenTest {
     public static final String SECRET_KEY = "Aj56sk128he19";
+
     @Test
     public void createToken() {
         String token = JWT.create()
@@ -38,12 +41,23 @@ public class TokenTest {
             System.out.println(jwt.getPayload());
         } catch (TokenExpiredException e) {
             System.out.println("已过期");
-        } catch (SignatureVerificationException e){
+        } catch (SignatureVerificationException e) {
             System.out.println("不合法");
         } catch (Exception e) {
             System.out.println("认证失败");
         }
 
+
+    }
+
+    @Test
+    public void json() throws InterruptedException {
+        Token token = new Token();
+        String curToken = token.createToken(1l, "test");
+        System.out.println(curToken);
+        Thread.sleep(8000);
+        String newToken = token.autoRequire(curToken);
+        System.out.println(newToken);
 
     }
 }

@@ -48,7 +48,7 @@ public class UserService {
         if (loginUser != null) {
             // 密码是否匹配
             return encoder.matches(user.getPassword(), loginUser.getPassword()) ?
-                    userToken.createToken(user) : null;
+                    userToken.createToken(user.getId(), user.getUsername()) : null;
         }else {
             // 用户名不匹配
             return null;

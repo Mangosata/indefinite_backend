@@ -42,13 +42,6 @@ public class UserController {
 //        }
 //    }
 
-    @PostMapping("/test")
-    public ResponseEntity<CoreResponseBody> test(@RequestBody User user) {
-        CoreResponseBody res = null;
-        res = new CoreResponseBody(null, "Username or password is wrong", null);
-        return ResponseEntity.ok(res);
-    }
-
     @PostMapping("/login")
     public ResponseEntity<CoreResponseBody> login(@RequestBody User user) {
         CoreResponseBody res = userService.isUserOrPassword(user);
